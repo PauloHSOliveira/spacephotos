@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito|Righteous|Ubuntu&display=swap');
+
+body, ul, li, p {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a#logo-id {
+    font-family: 'Righteous', cursive;
+}
+
+.headerClass {
+    background: rgb(0, 0, 0);
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.lista {
+    display: flex;
+    margin-right: 80px;
+}
+
+.lista li {
+    margin-left: 20px;
+}
+
+.lista li a {
+    display: block;
+    padding: 15px;
+}
+
+.barraDeBusca {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: 0 auto;
+    font-family: 'Nunito', sans-serif;
+}
+
+.barraDeBusca input {
+    height: 35px;
+    width: 250px;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.barraDeBusca button {
+    border: none;
+    background: rgb(98, 0, 255);
+    color: #ffffff;
+    height: 35px;
+    width: 100px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+.classSection {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.classSection > div {
+    flex: 1 1 200px;
+    margin: 30px;
+}
+
+iframe {
+    max-width: 100%;
+    display: block;
+    width: 400px;
+    height: 400px;
+}
+
+strong, h4 {
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 10px;
+}
+
+@media(max-width: 600px) {
+    .lista {
+        display: none;
+    }
+    .barraDeBusca {
+        align-items: center;
+    }
+    .barraDeBusca button, input{
+        margin: 0 auto;
+    }
+}
