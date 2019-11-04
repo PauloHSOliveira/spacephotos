@@ -5,51 +5,74 @@ class App {
         this.photosNasa = [];
 
         this.classesection = document.getElementById('secao');
+        this.form = document.getElementById('buscaForm');
+        this.inpuEl = document.querySelector('input[name=mesSpace]');
 
-        this.addPhotos();
+        this.addPhotosAtual();
+
+        this.registerMes();
     }
 
-    async addPhotos() {
+    registerMes() {
+        this.form.onsubmit = event => this.verifyInput(event);
+    }
 
-        let anoAtual = new Date().getFullYear();
-        console.log(anoAtual)
+    addPhotosAtual() {
+        const dataAtual = new Date();
+        this.addPhotos(dataAtual.getMonth().toString(),dataAtual.getFullYear().toString());
+        console.log(dataAtual.getMonth())
+    }
 
+    verifyInput(event) {
+        event.preventDefault();
+        const data = new Date();
+
+        const inputText = this.inpuEl.value;
+        const inputArray = inputText.split("")
+
+        const mes = this.inpuEl.value.length === 0? data.getMonth().toString():`${inputArray[0]}${inputArray[1]}`;
+        const ano = this.inpuEl.value.length === 0? data.getFullYear().toString():`${inputArray[3]}${inputArray[4]}${inputArray[5]}${inputArray[6]}`
+
+        console.log(mes,ano)
+        this.addPhotos(mes,ano)
+    }
+
+    async addPhotos(mes,ano) {
         var dia = 1;
-        var mes = 8;
+        var datamax = 32;
 
-        var datamax = 31
-
+        this.classesection.innerHTML = '';
         while (dia <= datamax) {
             this.photosNasa = [];
-            
+
             var diaform = dia <= 9 ? '0' + dia.toString() : dia.toString();
-            var mesform = mes <= 9 ? '0' + mes.toString() : mes.toString();
-            let dateFormt = `${anoAtual}-${mesform}-${diaform}`
-           
-            let link = 'https://api.nasa.gov/planetary/apod?api_key=7dfNpX7YU51fptt695iUnD33Ls5tk0lLtjXWATa0';
-            const response = await axios.get(link + `&date=${dateFormt}`);
-            const { url, date, title, media_type } = response.data;
-            
-            this.photosNasa.push({
-                url,
-                date,
-                title,
-                media_type
-            });
-            
-            if (dia === datamax) {
-                break;
-            } else {
+            let dateFormt = `${ano}-${mes}-${diaform}`
+            try {
+                let link = 'https://api.nasa.gov/planetary/apod?api_key=7dfNpX7YU51fptt695iUnD33Ls5tk0lLtjXWATa0';
+                const response = await axios.get(link + `&date=${dateFormt}`);
+                const { url, date, title, media_type } = response.data;
+
+                this.photosNasa.push({
+                    url,
+                    date,
+                    title,
+                    media_type
+                });
+
                 this.renderPhotos(media_type);
                 dia++;
+            } catch (err) {
+                console.log('Todas as fotos carregadas')
+                break;
             }
         }
+
     }
     renderPhotos(typeMedia) {
-        
+
         this.photosNasa.forEach(nasaPhotos => {
-            console.log(typeMedia)
-            const element = typeMedia === 'image'? 'img':'iframe';
+
+            const element = typeMedia === 'image' ? 'img' : 'iframe';
 
             const mediaItem = document.createElement(element);
             mediaItem.setAttribute('src', nasaPhotos.url);
@@ -60,7 +83,7 @@ class App {
             let dataItem = document.createElement('h4');
             dataItem.appendChild(document.createTextNode(nasaPhotos.date));
 
-            
+
             let divItem = document.createElement('div');
 
             divItem.appendChild(mediaItem);
